@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+
+require 'net/http'
+require 'uri'
+require 'pp'
+
+
+# http://www.cococomic.com/manhua/5338/43438/?v=3*s=7
+#
+#
+#
+servers  = ["http://91.cococomic.com/dm01/", "http://91.cococomic.com/dm02/", "http://72.cococomic.com/dm03/", "http://173.comicservers.com:88/dm04/", "http://91.cococomic.com/dm05/", "http://91.cococomic.com/dm06/", "http://72.cococomic.com/dm07/", "http://91.cococomic.com/dm08/", "http://72.cococomic.com/dm09/", "http://91.cococomic.com/dm10/", "http://91.cococomic.com/dm11/", "http://91.cococomic.com/dm12/"]
+if ARGV.size == 0
+  puts "Usage: #{$0} URL"
+  exit 2
+end
+url = ARGV.shift
+if url =~ /s=(\d+)$/
+  server = servers[$1.to_i-1]
+end
+uri = URI.parse(url)
+
+body = Net::HTTP.get(uri)
+urls = nil
+if body =~ /var PicListUrl = "([^"]+)"/
+  urls = $1.split('|').map {|x| server + x}
+end
+
+unless urls.nil?
+  urls.each do |image_url|
+    #pp image_url
+    `wget --referer="#{url}" #{image_url}`
+  end
+end
+        
+        
+
