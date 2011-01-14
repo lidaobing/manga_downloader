@@ -1,0 +1,7 @@
+= Install
+
+  rake install
+
+= Usage
+
+  manga_downloader "http://www.cococomic.com/manhua/5338/43438/?v=3*s=7"
