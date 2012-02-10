@@ -4,6 +4,9 @@
 require 'net/http'
 require 'uri'
 require 'pp'
+require 'logger'
+
+logger = Logger.new(STDERR)
 
 
 # http://www.cococomic.com/manhua/5338/43438/?v=3*s=7
@@ -25,6 +28,8 @@ body = Net::HTTP.get(uri)
 urls = nil
 if body =~ /var PicListUrl = "([^"]+)"/
   urls = $1.split('|').map {|x| server + x}
+else
+  logger.error "invalid response from url: #{url}"
 end
 
 unless urls.nil?

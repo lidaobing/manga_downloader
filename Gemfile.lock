@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    manga_downloader (0.0.alpha)
+    manga_downloader (0.0.2)
 
 GEM
   remote: http://rubygems.org/
